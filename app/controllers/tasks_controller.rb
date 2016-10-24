@@ -56,6 +56,9 @@ private
     redirect_to action: 'index'
   end
 
+  def find_user
+    
+  # I'm not sure if this is correct anymore
   def current_task
     Task.find(params[:id].to_i)
   end
