@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
 
   skip_before_filter :verify_authenticity_token
+  before_action :find_user
+
 
   def index
     @tasks = @user.tasks
@@ -57,7 +59,9 @@ private
   end
 
   def find_user
-    
+    @user = User.find(session[:user_id])
+  end
+
   # I'm not sure if this is correct anymore
   def current_task
     Task.find(params[:id].to_i)

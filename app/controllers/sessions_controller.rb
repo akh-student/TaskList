@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       render :creation_failure unless @user.save
     end
     session[:user_id] = @user.id
-    redirect_to sessions_path
+    redirect_to user_tasks_path
   end
 
   def index
