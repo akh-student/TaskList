@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       @user = User.build_from_github(auth_hash)
       render :creation_failure unless @user.save
     end
-
+    session[:user_id] = @user.id
     redirect_to sessions_path
   end
 
