@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   get "/auth/:provider/callback" =>  "sessions#create"
-
+  resources :sessions
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
