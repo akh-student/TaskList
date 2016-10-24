@@ -9,7 +9,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    Task.create(title: params[:task][:title], description: params[:task][:description])
+    Task.create(title: params[:task][:title], description: params[:task][:description], user_id: @user.id)
     go_home
   end
 
@@ -27,11 +27,11 @@ class TasksController < ApplicationController
   def update
     @current_task = current_task
 
-    if params[:title] != nil
+    if params[:task][:title] != nil
       @current_task.title = params[:task][:title]
     end
 
-    if params[:description] != nil
+    if params[:task][:description] != nil
       @current_task.description = params[:task][:description]
     end
 

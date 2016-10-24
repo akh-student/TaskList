@@ -1,2 +1,38 @@
-<h1>Tasks#index</h1>
-<p>Find me in app/views/tasks/index.html.erb</p>
+<h1>Task List</h1>
+<ul>
+  <% @tasks.each do |task| %>
+    <li>
+      <div>
+        <% if task[:completed_at] == nil %>
+          <%= button_to "▢", user_task_path(@user.id, task[:id]), {params: {task: {complete: 'true', title: task.title, description: task.description}}, method: :put} %>
+
+        <% else %>
+          <%= button_to "✔", { action: user_task_path(@user.id, task[:id]), complete: 'false' }, method: :put %>
+        <% end %>
+      </div>
+
+      <div>
+        <%= link_to(task[:title], user_task_path(@user.id, task[:id])) %>: <%= task[:description] %>
+      </div>
+
+      <div class="edit">
+        <%= button_to "Edit", { action: 'edit', id: task.id }, method: :get %>
+      </div>
+
+      <div>
+        <%= button_to "Delete Task", { action: 'destroy', id: task.id }, method: :delete, data: { confirm: "Are you sure?" } %>
+      </div>
+
+      <div>
+        <% if task[:completed_at] != nil %>
+          <%= "Completed on #{task[:completed_at].strftime("%A, %B %d")}" %>
+        <% end %>
+      </div>
+
+    </li>
+  </br>
+  <% end %>
+
+</ul>
+
+<%= link_to("Add a new task", new_user_task_path(@user.id)) %>

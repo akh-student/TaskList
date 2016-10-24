@@ -1,2 +1,15 @@
-<h1>Tasks#edit</h1>
-<p>Find me in app/views/tasks/edit.html.erb</p>
+<h1>Edit a task</h1>
+
+<section class="form">
+
+  <%= form_for @current_task, url: {action: 'update'}, method: :patch do |f| %>
+    <%= f.label :title %>:
+    <%= f.text_field :title %>
+
+    <%= f.label :description %>:
+    <%= f.text_field :description %>
+
+    <%= f.submit %>
+  <% end %>
+
+</section>

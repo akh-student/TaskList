@@ -1,2 +1,15 @@
-<h1>Tasks#new</h1>
-<p>Find me in app/views/tasks/new.html.erb</p>
+<h1>Add a new task</h1>
+
+<section class="form">
+
+  <%= form_for :task, url: { action: 'create' } do |f| %>
+    <%= f.label :title %>:
+    <%= f.text_field :title %>
+
+    <%= f.label :description %>:
+    <%= f.text_field :description %>
+
+    <%= f.submit %>
+  <% end %>
+
+</section>

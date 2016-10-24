@@ -11,10 +11,15 @@ class SessionsController < ApplicationController
       render :creation_failure unless @user.save
     end
     session[:user_id] = @user.id
-    redirect_to user_tasks_path
+    redirect_to user_tasks_path(@user.id)
   end
 
   def index
     @user = User.find(session[:user_id]) # < recalls the value set in a previous request
+  end
+
+  def destroy
+    session[:user_id] = nil
+    redirect_to root_path
   end
 end
