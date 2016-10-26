@@ -1,2 +1,16 @@
-<h1>Tasks#show</h1>
-<p>Find me in app/views/tasks/show.html.erb</p>
+<h1><%= @current_task[:title] %></h1>
+<p>
+  <%= @current_task[:description] %>
+</p>
+<p>
+  <% if @current_task[:completed_at] == nil %>
+    <%= button_to "Mark Complete", { action: 'update', id: @current_task.id, complete: 'true' }, method: :put %>
+  <% else %>
+    <%= "Completed on #{@current_task[:completed_at].strftime("%A, %B %d")}" %>
+    <%= button_to "Uncomplete", { action: 'update', id: @current_task.id, complete: 'false' }, method: :put %>
+  <% end %>
+
+  <%= button_to "Delete Task", { action: 'destroy', id: @current_task.id }, method: :delete, data: { confirm: "Are you sure?" } %>
+
+  <%= button_to "Home", { action: 'index' },  method: :get %>
+</p>

@@ -1,38 +1,51 @@
 <h1>Task List</h1>
-<ul>
+<table>
+  <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Edit</th>
+      <th>Delete</th>
+      <th>Change Status</th>
+      <th>Completed At</th>
+  </tr>
+
   <% @tasks.each do |task| %>
-    <li>
-      <div>
+  <tr>
+
+      <td>
+        <%= link_to(task[:title], task_path(task[:id])) %>
+      </td>
+
+      <td>
+        <%= task[:description] %>
+      </td>
+
+      <td class="edit">
+        <%= button_to "Edit", { action: 'edit', id: task.id }, method: :get %>
+      </td>
+
+      <td>
+        <%= button_to "Delete Task", { action: 'destroy', id: task.id }, method: :delete, data: { confirm: "Are you sure?" } %>
+      </td>
+
+      <td>
         <% if task[:completed_at] == nil %>
-          <%= button_to "▢", task_path(task[:id]), {params: {task: {complete: 'true'}}, method: :put} %>
+          <%= button_to "Mark Complete", task_path(task[:id]), {params: {task: {complete: 'true'}}, method: :put} %>
 
         <% else %>
-          <%= button_to "✔", { action: task_path(task[:id]), complete: 'false' }, method: :put %>
+          <%= button_to "Mark Incomplete", { action: task_path(task[:id]), complete: 'false' }, method: :put %>
         <% end %>
-      </div>
+      </td>
 
-      <div>
-        <%= link_to(task[:title], task_path(task[:id])) %>: <%= task[:description] %>
-      </div>
-
-      <div class="edit">
-        <%= button_to "Edit", { action: 'edit', id: task.id }, method: :get %>
-      </div>
-
-      <div>
-        <%= button_to "Delete Task", { action: 'destroy', id: task.id }, method: :delete, data: { confirm: "Are you sure?" } %>
-      </div>
-
-      <div>
+      <td>
         <% if task[:completed_at] != nil %>
           <%= "Completed on #{task[:completed_at].strftime("%A, %B %d")}" %>
         <% end %>
-      </div>
+      </td>
 
-    </li>
-  </br>
+    </tr>
   <% end %>
+</table>
 
-</ul>
 
 <%= link_to("Add a new task", new_task_path) %>
