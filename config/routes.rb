@@ -1,16 +1,12 @@
 Rails.application.routes.draw do
 
   get 'pages/index'
-
+  
   root to: 'pages#index'
 
   get '/auth/:provider/callback' =>  'sessions#create'
 
-  resources :users do
-    resources :tasks
-  end
-
-  resources :sessions
+  resources :tasks, :sessions
 
 
 

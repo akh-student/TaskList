@@ -1,16 +1,17 @@
 class TasksController < ApplicationController
 
   skip_before_filter :verify_authenticity_token
-  before_action :find_user
+  before_action :find_user, except: [:index]
 
 
   def index
-    @tasks = @user.tasks
-  end
-
-  def create
-    Task.create(title: params[:task][:title], description: params[:task][:description], user_id: @user.id)
-    go_home
+    if session[:user_id] == nil
+      flash[:notice] = "Please log in"
+      redirect_to '/'
+    else
+      find_user
+      @tasks = @user.tasks
+    end
   end
 
   def show
@@ -18,6 +19,12 @@ class TasksController < ApplicationController
   end
 
   def new
+  end
+
+  def create
+    @task = Task.new(title: params[:task][:title], description: params[:task][:description], user_id: @user.id)
+    @task.save
+    redirect_to tasks_path
   end
 
   def edit
@@ -43,21 +50,17 @@ class TasksController < ApplicationController
     end
 
     @current_task.save
-    go_home
+    redirect_to tasks_path
   end
 
   def destroy
     @current_task = current_task
     @current_task.destroy
-    go_home
+    redirect_to tasks_path
   end
 
 
 private
-  def go_home
-    redirect_to action: 'index'
-  end
-
   def find_user
     @user = User.find(session[:user_id])
   end

@@ -4,7 +4,7 @@ class PagesController < ApplicationController
     if @user.nil?
       render pages_index_path
     else
-      redirect_to user_tasks_path (@user.id)
+      redirect_to tasks_path
     end
   end
 

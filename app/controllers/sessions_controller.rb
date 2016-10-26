@@ -10,8 +10,11 @@ class SessionsController < ApplicationController
       @user = User.build_from_github(auth_hash)
       render :creation_failure unless @user.save
     end
+    puts "(((((((((((((((((((((())))))))))))))))))))))"
+    puts @user.id
+    puts "(((((((((((((((((((((())))))))))))))))))))))"
     session[:user_id] = @user.id
-    redirect_to user_tasks_path(@user.id)
+    redirect_to tasks_path
   end
 
   def index
